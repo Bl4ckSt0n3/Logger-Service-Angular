@@ -25,6 +25,8 @@ export class LoggerComponent implements OnInit {
   //   }
   // }
 
+  
+
   loggerInfo(args: string) {
     this.loggerService.info(`Level Info: ${args}`);
   }
@@ -34,10 +36,10 @@ export class LoggerComponent implements OnInit {
   loggerError(args: string) {
     this.loggerService.warn(`Level Error: ${args}`);
   }
+
   ngOnInit(): void {
     // this.loggerService.log('info', 'this is info log');
     // this.loggerService.info('Logger Component: info method');
   }
-  // https://robferguson.org/blog/2017/09/09/a-simple-logging-service-for-angular-4/
-
+  // https://www.techiediaries.com/rxjs-of-tutorial-and-example/
 }

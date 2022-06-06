@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { first, pipe } from 'rxjs';
 import { LoggerService } from 'src/app/services/logger.service';
+import { UserService } from 'src/app/services/user.service';
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
+
 
 export interface ITab {
   id: number;
@@ -14,18 +18,19 @@ export interface ITab {
 export class LoggerComponent implements OnInit {
 
   active = 1;
-  constructor(private loggerService: LoggerService) { }
+  constructor(
+    private loggerService: LoggerService,
+    private userService: UserService
+    ) { }
 
-  // logger(type: string, args: string): void {
-  //   if(type == 'info'){
-  //     this.loggerService.log('warn', 'loggerService');
-  //     this.loggerService.info(`Level Info: ${args}`);
-  //   }else if(type == 'warn'){
-  //     this.loggerService.warn(`Level Warn: `)
-  //   }
-  // }
+  loginForm = new FormGroup({
+    emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+    passwordFormControl: new FormControl('', [Validators.required, Validators.minLength(8)])
+  });
 
-  
+  get f() {
+    return this.loginForm.controls;
+  }
 
   loggerInfo(args: string) {
     this.loggerService.info(`Level Info: ${args}`);
@@ -35,6 +40,19 @@ export class LoggerComponent implements OnInit {
   }
   loggerError(args: string) {
     this.loggerService.warn(`Level Error: ${args}`);
+  }
+
+  userAuth() {
+    this.userService.apiDataService(this.loginForm.get("emailFormControl")?.value, this.loginForm.get("passwordFormControl")?.value).subscribe({
+      next: (success: any) => {
+        // this.loggerInfo(success);
+        console.log(success);
+      },
+      error: (e: any) => {
+        this.loggerError(e);
+      },
+      complete: () => this.loggerInfo('Done !'),
+    });
   }
 
   ngOnInit(): void {

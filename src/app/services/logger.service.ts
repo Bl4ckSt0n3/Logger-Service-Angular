@@ -8,6 +8,7 @@ export abstract class Logger {
   public set info(value: any) {
     this._info = value;
   }
+
   private _warn: any;
   public get warn(): any {
     return this._warn;
@@ -15,6 +16,7 @@ export abstract class Logger {
   public set warn(value: any) {
     this._warn = value;
   }
+  
   private _error: any;
   public get error(): any {
     return this._error;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { first, pipe } from 'rxjs';
 import { LoggerService } from 'src/app/services/logger.service';
 import { UserService } from 'src/app/services/user.service';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 
 export interface ITab {
@@ -45,19 +45,14 @@ export class LoggerComponent implements OnInit {
   userAuth() {
     this.userService.apiDataService(this.loginForm.get("emailFormControl")?.value, this.loginForm.get("passwordFormControl")?.value).subscribe({
       next: (success: any) => {
-        // this.loggerInfo(success);
-        console.log(success);
+        this.loggerInfo(`${success.email} logged In !`);
       },
       error: (e: any) => {
-        this.loggerError(e);
+        this.loggerError(`Error Log: ${e}`);
       },
-      complete: () => this.loggerInfo('Done !'),
+      complete: () => this.loggerWarn('User Logged In !'),
     });
   }
 
-  ngOnInit(): void {
-    // this.loggerService.log('info', 'this is info log');
-    // this.loggerService.info('Logger Component: info method');
-  }
-  // https://www.techiediaries.com/rxjs-of-tutorial-and-example/
+  ngOnInit(): void {}
 }

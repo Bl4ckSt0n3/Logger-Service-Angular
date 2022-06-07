@@ -10,11 +10,14 @@ const noop = (): any => undefined;
 })
 export class ProcessService extends Logger{
 
+  // custom logger function
   log(type: string, args?: any): void {
     if(isDebugMode){
       console.log(`type is ${type} | logger: ${args}`);
     }
   }
+
+  // METHOD OVERRIDING //
   override get info() {
     if (isDebugMode) {
       return console.info.bind(console);
